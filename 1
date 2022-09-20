@@ -1,0 +1,50 @@
+%%Creating pitches
+pitchDur=1;
+fS=8000;
+timeArray=0:1/fS:pitchDur;
+pitchA=2*sin(2*pi*freqPitch(1)*timeArray+0);
+pitchB=2*sin(2*pi*freqPitch(2)*timeArray+0);
+pitchC=2*sin(2*pi*freqPitch(3)*timeArray+0);
+pitchD=2*sin(2*pi*freqPitch(4)*timeArray+0);
+pitchE=2*sin(2*pi*freqPitch(5)*timeArray+0);
+pitchF=2*sin(2*pi*freqPitch(6)*timeArray+0);
+pitchG=2*sin(2*pi*freqPitch(7)*timeArray+0);
+
+%%Read the file with pitches
+fid=fopen('song.txt');
+song=fscanf(fid,'%s');
+fclose(fid);
+
+%%Create the song and the file.wav
+singsong = [pitchA pitchE pitchB pitchF pitchC pitchG pitchD pitchD];
+sound(singsong);
+audiowrite('firstsong.wav',singsong,fS);
+audioWavinfo = audioinfo('firstSong.wav');
+
+wavFileName = audioWavinfo.Filename
+wavFileCompMet=audioWavinfo.CompressionMethod
+wavFileNumCh=audioWavinfo.NumChannels
+wavFileRate=audioWavinfo.SampleRate
+wavFileSamples=audioWavinfo.TotalSamples
+wavFileDur=audioWavinfo.Duration
+
+%% Listen the mp3 File
+audiomp3=audioread('song.mp3');
+sound(audio);
+wavFileNamemp3=audiomp3.Filename;
+wavFileCompMetmp3=audiomp3.CompressionMethod;
+wavFileNumChmp3=audiomp3.NumChannels;
+wavFileRatemp3=audiomp3.SampleRate;
+wavFileSamplesmp3=audiomp3.TotalSamples;
+wavFileDurmp3=audiomp3.Duration;
+save data.mat wavFileNamemp3 wavFileCompMetmp3 wavFileNumChmp3 wavFileRatemp3 wavFileSamplesmp3 wavFileDurmp3
+fprintf('----------.MP3 VS. WAV----------\n');
+fprintf('          %s VS %s\n', wavFileName, wavFileNamemp3);
+fprintf('          %s VS %s\n', wavFileCompMet, wavFileCompMetmp3);
+fprintf('          %s VS %s\n', wavFileDur, wavFileDurmp3);
+fprintf('          %s VS %s\n', wavFileSample, wavFileSamplemp3);
+fprintf('------------------------------\n');
+disp(['          ',wavFileName,'VS',wavFileNamemp3]);
+disp(['          ',(wavFileCompMet),'VS',(wavFileCompMetmp3)]);
+disp(['          ',(wavFileDur),'VS',(wavFileDurmp3)]);
+disp(['          ',(wavFileSamples),'VS',(wavFileSamplesmp3)]);
